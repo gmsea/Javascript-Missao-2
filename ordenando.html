@@ -5,17 +5,20 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Ordenando Números</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='ordenando.js' defer></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='main_ordenando.css'>
+
 </head>
 <body>
+    <h1>Ordenando Valores</h1>
+    <p>Valor</p>
 
     <input type="number" id="valor" placeholder="Digite um valor">
 
     <button onclick="add()">Adicionar</button>
+    <hr>
 
     <select id="algoritmo">
-        <option value="bubble">Bubble Sort</option>
+        <option value="bubble" selected>Bubble Sort</option>
         <option value="selection">Selection Sort</option>
         <option value="quick">Quick Sort</option>
     </select>
@@ -23,6 +26,7 @@
     <button onclick="ordenar()">Ordenar</button>
 
     <button onclick="misturar()">Misturar</button>
+    <hr>
 
     <ul id="valores"></ul>
 
@@ -30,6 +34,17 @@
         function add() {
             var valorInput = document.getElementById("valor");
             var listaValores = document.getElementById("valores");
+
+            if (valorInput.value === "") {
+                alert("Por favor, digite um número");
+                return;
+            }
+
+            if([...listaValores.children].some(item => item.textContent == valorInput.value)) {
+                alert("Esse número ja foi adicionado.");
+                return;
+            }
+
             var node = document.createElement("li");
             node.textContent = valorInput.value;
             listaValores.appendChild(node);
@@ -54,15 +69,9 @@
                 quick_sort(valores);
             }
 
-            while (listaValores.firstChild) {
-                listaValores.removeChild(listaValores.firstChild);
-            }
-
-            for (var j = 0; j < valores.length; j++) {
-                var novoNode = document.createElement("li");
-                novoNode.textContent = valores[j];
-                listaValores.appendChild(novoNode);
-            }
+            listaValores.innerHTML = valores
+                .map(valor => `<li>${valor}</li>`)
+                .reduce((html, item) => html + item, '');
         }
 
         function misturar() {
@@ -73,19 +82,62 @@
                 valores.push(parseInt(listaValores.children[i].textContent));
             }
 
-            shuffle(valores, valores.length);
+            shuffle(valores);
 
-            while (listaValores.firstChild) {
-                listaValores.removeChild(listaValores.firstChild);
+            listaValores.innerHTML = valores
+                .map(valor => `<li>${valor}</li>`)
+                .reduce((html, item) => html + item, '');
+        }
+
+        function bubble_sort(arr) {
+            var len = arr.length;
+            for (var i = 0; i < len; i++) {
+                for (var j = 0; j < len - i - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        var temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
             }
+        }
 
-            for (var j = 0; j < valores.length; j++) {
-                var novoNode = document.createElement("li");
-                novoNode.textContent = valores[j];
-                listaValores.appendChild(novoNode);
+        function selection_sort(arr) {
+            var len = arr.length;
+            for (var i = 0; i < len; i++) {
+                var min = i;
+                for (var j = i + 1; j < len; j++) {
+                    if (arr[j] < arr[min]) {
+                        min = j;
+                    }
+                }
+                if (min !== i) {
+                    var temp = arr[i];
+                    arr[i] = arr[min];
+                    arr[min] = temp;
+                }
+            }
+        }
+
+        function quick_sort(arr) {
+            if (arr.length <= 1) return arr;
+            var pivot = arr[0];
+            var left = [];
+            var right = [];
+            for (var i = 1; i < arr.length; i++) {
+                if (arr[i] < pivot) left.push(arr[i]);
+                else right.push(arr[i]);
+            }
+            return [...quick_sort(left), pivot, ...quick_sort(right)];
+        }
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
         }
     </script>
-    
+
 </body>
 </html>

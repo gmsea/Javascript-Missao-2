@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+input[type="number"],
+select {
+    width: 25%;
+    padding: 10px;
+    margin: 5px 0;
+    display: block;
+    box-sizing: border-box;
+    
+}
+
+button {
+    padding: 10px;
+    margin: 5px 5px 5px 0;
+    border: 2px solid #0569fd;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #0569fd;
+}
+
+hr {
+    margin: 20px 0;
+    width: 25%;
+    border: 1% solid #000000;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    margin-left: 20px;
+}
+
+p {
+    margin-bottom: 1px;
+}
