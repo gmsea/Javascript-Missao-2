@@ -4,7 +4,6 @@ const swap = (array, i, j) => {
     array[j] = temp;
 };
 
-
 const shuffle = (array, swapCount) => {
     for (let i = 0; i < swapCount; i++) {
         const randIndex1 = Math.floor(Math.random() * array.length);
@@ -12,7 +11,6 @@ const shuffle = (array, swapCount) => {
         swap(array, randIndex1, randIndex2);
     }
 };
-
 
 const bubble_sort = (array) => {
     const n = array.length;
@@ -24,7 +22,6 @@ const bubble_sort = (array) => {
         }
     }
 };
-
 
 const selection_sort = (array) => {
     const n = array.length;
@@ -39,7 +36,6 @@ const selection_sort = (array) => {
     }
 };
 
-
 const particionamento = (array, low, high) => {
     const pivot = array[high];
     let i = low - 1;
@@ -52,7 +48,6 @@ const particionamento = (array, low, high) => {
     swap(array, i + 1, high);
     return i + 1;
 };
-
 
 const quick_sort = (array, low = 0, high = array.length - 1) => {
     if (low < high) {
